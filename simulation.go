@@ -26,19 +26,26 @@ const (
 	maxConnections     int     = 600
 )
 
+var diminishing = 1
+
 func main() {
+	j := 0
 	rand.Seed(time.Now().UTC().UnixNano())
 	client, err := stats.NewStatsd("127.0.0.1:8125", "go")
 	if err != nil {
 		return
 	}
 	for {
+		j++
 		activeConnections := randInt(minConnections, maxConnections)
 		for i := 0; i < activeConnections; i++ {
 			go pageVisit(client)
 		}
 		client.Gauge("active_connections", float64(activeConnections), 1.0, nil)
 		time.Sleep(time.Second)
+		if j%60 == 0 && diminishing < 10 {
+			diminishing++
+		}
 	}
 }
 
@@ -46,7 +53,7 @@ func pageVisit(client stats.Stats) {
 	client.Inc("page_visit", 1, 1.0, nil)
 	if percentageChance(visitProduct) {
 		stamp := time.Now()
-		time.Sleep(time.Second * time.Duration(randInt(5, 15)))
+		time.Sleep(time.Second * time.Duration(randInt(2+diminishing, 15)))
 		productVisit(client, stamp)
 	}
 }
@@ -55,7 +62,7 @@ func productVisit(client stats.Stats, stamp time.Time) {
 	product := randomizeProduct()
 	client.Inc("product_visit", 1, 1.0, createProductTag(product))
 	if percentageChance(addToCartProduct) {
-		time.Sleep(time.Second * time.Duration(randInt(5, 15)))
+		time.Sleep(time.Second * time.Duration(randInt(2+diminishing, 15)))
 		productAddToCart(client, product, stamp)
 	}
 }
@@ -63,7 +70,7 @@ func productVisit(client stats.Stats, stamp time.Time) {
 func productAddToCart(client stats.Stats, product product, stamp time.Time) {
 	client.Inc("product_added_to_cart", 1, 1.0, createProductTag(product))
 	if percentageChance(buyProduct) {
-		time.Sleep(time.Second * time.Duration(randInt(10, 25)))
+		time.Sleep(time.Second * time.Duration(randInt(2+diminishing, 25)))
 		productBought(client, product, stamp)
 	}
 }
