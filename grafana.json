@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_INFLUX",
-      "label": "Influx",
+      "name": "DS_OCODERFEST_INFLUXDB",
+      "label": "Ocoderfest InfluxDb",
       "description": "",
       "type": "datasource",
       "pluginId": "influxdb",
@@ -49,126 +49,18 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
-          "fill": 1,
-          "id": 1,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": true,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 6,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "page_visit",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "10s"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "go_page_visit",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "sum"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Total Visits",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 2,
           "legend": {
-            "alignAsTable": true,
+            "alignAsTable": false,
             "avg": true,
             "current": false,
             "max": false,
             "min": false,
-            "rightSide": true,
+            "rightSide": false,
             "show": true,
-            "total": true,
+            "total": false,
             "values": true
           },
           "lines": true,
@@ -181,7 +73,7 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 6,
+          "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -191,13 +83,13 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "5s"
                   ],
                   "type": "time"
                 },
                 {
                   "params": [
-                    "null"
+                    "previous"
                   ],
                   "type": "fill"
                 }
@@ -265,7 +157,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 3,
           "legend": {
@@ -299,7 +191,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "1s"
                   ],
                   "type": "time"
                 },
@@ -311,7 +203,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "previous"
                   ],
                   "type": "fill"
                 }
@@ -376,10 +268,118 @@
         },
         {
           "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
+          "fill": 1,
+          "id": 1,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": false,
+            "total": true,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "page_visit",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "previous"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "go_page_visit",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "sum"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Total Visits",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 4,
           "legend": {
@@ -493,7 +493,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 5,
           "legend": {
@@ -527,7 +527,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "20s"
                   ],
                   "type": "time"
                 },
@@ -539,7 +539,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "previous"
                   ],
                   "type": "fill"
                 }
@@ -607,7 +607,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 6,
           "legend": {
@@ -641,7 +641,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "1s"
                   ],
                   "type": "time"
                 },
@@ -653,7 +653,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "linear"
                   ],
                   "type": "fill"
                 }
@@ -667,13 +667,13 @@
                 [
                   {
                     "params": [
-                      "mean"
+                      "90_percentile"
                     ],
                     "type": "field"
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "median"
                   }
                 ]
               ],
@@ -721,7 +721,7 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUX}",
+          "datasource": "${DS_OCODERFEST_INFLUXDB}",
           "fill": 1,
           "id": 7,
           "legend": {
@@ -870,5 +870,5 @@
   },
   "timezone": "browser",
   "title": "Shop Simulation",
-  "version": 27
+  "version": 10
 }
